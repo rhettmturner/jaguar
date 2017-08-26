@@ -1,6 +1,7 @@
 <template>
   <div class="swipe">
     <h1>This will be where we swipe our events</h1>
+    <button class="btn btn-primary"></button>
   </div>
 </template>
 
@@ -16,6 +17,7 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+
 h1, h2 {
   font-weight: normal;
 }
