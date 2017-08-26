@@ -1,34 +1,30 @@
 <template>
   <div class="swipe">
     <div class="container">
-      <a href="#"><img src="http://via.placeholder.com/350x400"></a>
-      <div class="row" id="eventInformation">
-        
-        <div id="eventNameAndLocation" class="col-xs-9">
-          <h3>Event Name</h3>
-          <h4>Event Location</h4>
-        </div>
-
-        <div id="eventDateAndPrice" class="col-xs-3">
-          <h3>Date</h3>
-          <h4>$$$</h4>
-        </div>
-
-      </div>
-    </div>
-    <div class="row">
-      <button class="btn btn-danger">X</button>
-      <img src="http://via.placeholder.com/50x50" class="rounded-circle">
-    </div>
+              <p>{{ events }}</p>
+              Hello
+            </div>
   </div>
 </template>
 
 <script>
+import axios from 'axios';
+
 export default {
-  name: 'swipe',
-  data () {
-    return {
-    }
+  name: 'event',
+  data: () => ({
+    events: [],
+    errors: []
+  }),
+
+  created() {
+    axios.get('https://www.eventbriteapi.com/v3/events/search/?token=BE4MSLBLQD6THH4B74W5')
+    .then(response => {
+      this.events = response.data;
+    })
+    .catch(e => {
+      this.errors.push(e);
+    })
   }
 }
 </script>
@@ -49,3 +45,4 @@ img {
   height: 50px;
 }
 </style>
+
