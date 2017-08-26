@@ -44,6 +44,8 @@ img {
 }
 
 .btn-danger {
-  border-radius: 20px;
+  border-radius: 50px;
+  width: 50px;
+  height: 50px;
 }
 </style>
