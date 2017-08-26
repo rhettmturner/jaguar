@@ -1,7 +1,25 @@
 <template>
   <div class="swipe">
-    <h1>This will be where we swipe our events</h1>
-    <button class="btn btn-primary"></button>
+    <div class="container">
+      <a href="#"><img src="http://via.placeholder.com/350x400"></a>
+      <div class="row" id="eventInformation">
+        
+        <div id="eventNameAndLocation" class="col-xs-9">
+          <h3>Event Name</h3>
+          <h4>Event Location</h4>
+        </div>
+
+        <div id="eventDateAndPrice" class="col-xs-3">
+          <h3>Date</h3>
+          <h4>$$$</h4>
+        </div>
+
+      </div>
+    </div>
+    <div class="row">
+      <button class="btn btn-danger">X</button>
+      <img src="http://via.placeholder.com/50x50" class="rounded-circle">
+    </div>
   </div>
 </template>
 
@@ -17,22 +35,17 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-
-h1, h2 {
-  font-weight: normal;
+img {
+  max-width: 90%;
 }
 
-ul {
-  list-style-type: none;
-  padding: 0;
+#eventInformation {
+  text-align: left;
 }
 
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-
-a {
-  color: #42b983;
+.btn-danger {
+  border-radius: 50px;
+  width: 50px;
+  height: 50px;
 }
 </style>
