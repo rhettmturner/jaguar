@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <img src="./assets/logo.png">
+    <!-- This data will persist EVERYWHERE on your SPA -->
     <router-view></router-view>
   </div>
 </template>
