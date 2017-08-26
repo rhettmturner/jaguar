@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <img src="./assets/logo.png">
+    <!-- This data will persist EVERYWHERE on your SPA -->
     <router-view></router-view>
   </div>
 </template>
@@ -12,6 +12,8 @@ export default {
 </script>
 
 <style>
+@import '../node_modules/bootstrap/dist/css/bootstrap.css';
+
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
