@@ -1,9 +1,13 @@
 <template>
     <div class="swipe">
       <div class="container">
-        <a href="#"><img src="http://via.placeholder.com/350x400" class="roundedBorders"></a>
+        <!--
+          Need to find a way to pull url from localEvents object & 
+            need to find a way to pull image from localEvents object
+          Also need to adjust styling now that data is present
+        -->
+        <a href="/"><img src="http://via.placeholder.com/350x400" class="roundedBorders"></a>
         <div class="row roundedBorders" id="eventInformation">
-
           <div id="eventNameAndLocation" class="col-xs-9">
             <h3>{{ localEvents[counter].title }}</h3>
             <h4>{{ localEvents[counter].genre }}</h4>
@@ -15,18 +19,20 @@
           </div>
         </div>
       <div id="buttons">
+        <!--
+          On click, we can push to a likedEvents array which we export
+            from here and import into the calendar file?
+        -->
         <button class="btn btns btnNo" v-on:click="counter += 1">&#10006;</button>
         <button class="btn btns btnYes" v-on:click="counter += 1">&#10003;</button>
-      </div>
-
-      <p>The button above has been clicked {{ counter }} times.</p>  
-  
+      </div>  
      </div>
     </div>
 </template>
 
 <script>
 import axios from 'axios';
+
 function eventObj(title, genre, date, time, priceRanges, description, eventLink, images)  {
     this.title = title;
     this.genre = genre;
@@ -51,7 +57,7 @@ export default {
     axios.get('https://app.ticketmaster.com/discovery/v2/events.json?dmaId=232&apikey=c1DrkQUS5VFM6ZdKD4tbZxFPLtoK9dGC')
     .then(response => {
       this.events = response.data._embedded.events
-      console.log(response.data._embedded.events);
+      //console.log(response.data._embedded.events);
       this.events.forEach(function (o) {
         if (o.priceRanges != undefined && o.priceRanges.length > 0) {
           var priceRange = o.priceRanges[0];
@@ -61,13 +67,11 @@ export default {
         }
         localEvents.push(new eventObj(o.name, o.classifications[0].genre.name, o.dates.start.localDate, o.dates.start.localTime, priceRange, '', o.url, image))
       })
-      return localEvents
     })
   }
 }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 
 #eventInformation {
