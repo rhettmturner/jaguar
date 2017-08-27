@@ -16,7 +16,7 @@
 import { EventBus } from './event-bus'
 
 EventBus.$on('event', localEvents => {
-  console.log("Within Description: " + localEvents.description)
+  console.log(localEvents.description)
 })
 
 export default {

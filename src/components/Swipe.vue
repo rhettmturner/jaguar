@@ -10,7 +10,7 @@
           </div>
 
           <div id="eventDateAndPrice" class="col-xs-3">
-            <h3>{{ localEvents[counter].date }}}</h3>
+            <h3>{{ localEvents[counter].date }}</h3>
             <h4>{{ localEvents[counter].priceRange }}</h4>
           </div>
 
@@ -56,7 +56,7 @@ export default {
     axios.get('https://app.ticketmaster.com/discovery/v2/events.json?dmaId=232&apikey=c1DrkQUS5VFM6ZdKD4tbZxFPLtoK9dGC')
     .then(response => {
       this.events = response.data._embedded.events
-      //console.log(response.data._embedded.events);
+      console.log(response.data._embedded.events);
       this.events.forEach(function (o) {
         if (o.priceRanges != undefined && o.priceRanges.length > 0) {
           var priceRange = o.priceRanges[0];
@@ -64,6 +64,7 @@ export default {
         if (o.images.length > 0) {
           var image = o.images;
         }
+        // !! We need to determine how we're going to grab the description !! //
         localEvents.push(new eventObj(o.name, o.classifications[0].genre.name, o.dates.start.localDate, o.dates.start.localTime, priceRange, '', o.url, image))
       })
     })
