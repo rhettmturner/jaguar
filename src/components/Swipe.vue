@@ -14,7 +14,7 @@
             <h4>$$$</h4>
           </div>
         </div>
-<p>{{ localEvents }}</p>
+<p>{{ localEvents[0] }}</p>
 
       <div id="buttons">
         <button class="btn btns btnNo">&#10006;</button>
@@ -27,9 +27,7 @@
 <script>
 import Vue from 'vue'
 import axios from 'axios';
-function eventObj( title,location, date, description, category, genre)  {
-
-    this.host = host;
+function eventObj(title,location, date, description, category, genre)  {
     this.title = title;
     this.location = location;
     this.date = date;
@@ -51,13 +49,11 @@ export default {
   }),
 
   created() {
-    axios.get('https://www.eventbriteapi.com/v3/events/search/?token=' + token + '&location.latitude=' + latitude + '&location.longitude=' + longitude + '&location.within=' + within)
+    axios.get('https://app.ticketmaster.com/discovery/v2/events.json?dmaId=232&apikey=c1DrkQUS5VFM6ZdKD4tbZxFPLtoK9dGC')
     .then(response => {
       this.events = response.data.events
-      console.log(response.data.events);
-      this.events.forEach( function(o){ localEvents.push(new eventObj(o.name.text)) })
-
-      console.log(localEvents)
+      console.log(response.data._embedded.events);
+      // this.events.forEach( function(o){ localEvents.push(new eventObj(o.name.text)) })
       return localEvents
     })
   }
