@@ -14,6 +14,7 @@
             <h4>$$$</h4>
           </div>
         </div>
+<p>{{ localEvents }}</p>
 
       <div id="buttons">
         <button class="btn btns btnNo">&#10006;</button>
@@ -26,16 +27,27 @@
 <script>
 import Vue from 'vue'
 import axios from 'axios';
+function eventObj( title,location, date, description, category, genre)  {
 
+    this.host = host;
+    this.title = title;
+    this.location = location;
+    this.date = date;
+    this.description = description;
+    this.category = category;
+    this.genre = genre;
+
+}
 var token = "BE4MSLBLQD6THH4B74W5";
 var latitude = '33.543682';
 var longitude = '-86.779633';
 var within = '20mi';
-
+var localEvents = [];
 export default {
   name: 'event',
   data: () => ({
-    events: []
+    events: [],
+    localEvents: localEvents
   }),
 
   created() {
@@ -43,6 +55,10 @@ export default {
     .then(response => {
       this.events = response.data.events
       console.log(response.data.events);
+      this.events.forEach( function(o){ localEvents.push(new eventObj(o.name.text)) })
+
+      console.log(localEvents)
+      return localEvents
     })
   }
 }
@@ -103,4 +119,3 @@ img {
 }
 
 </style>
-
