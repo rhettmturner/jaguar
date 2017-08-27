@@ -13,35 +13,36 @@
             <h3>Date</h3>
             <h4>$$$</h4>
           </div>
-
         </div>
 
       <div id="buttons">
         <button class="btn btns btnNo">&#10006;</button>
         <button class="btn btns btnYes">&#10003;</button>
       </div>
-
      </div>
     </div>
 </template>
 
 <script>
+import Vue from 'vue'
 import axios from 'axios';
+
+var token = "BE4MSLBLQD6THH4B74W5";
+var latitude = '33.543682';
+var longitude = '-86.779633';
+var within = '20mi';
 
 export default {
   name: 'event',
   data: () => ({
-    events: [],
-    errors: []
+    events: []
   }),
 
   created() {
-    axios.get('https://www.eventbriteapi.com/v3/events/search/?token=BE4MSLBLQD6THH4B74W5')
+    axios.get('https://www.eventbriteapi.com/v3/events/search/?token=' + token + '&location.latitude=' + latitude + '&location.longitude=' + longitude + '&location.within=' + within)
     .then(response => {
-      this.events = response.data;
-    })
-    .catch(e => {
-      this.errors.push(e);
+      this.events = response.data.events
+      console.log(response.data.events);
     })
   }
 }
