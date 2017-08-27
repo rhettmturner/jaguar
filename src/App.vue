@@ -2,8 +2,8 @@
   <div id="app">
   <header class="main-nav">
     <a href="#" id="profileButton"><i class="fa fa-bars"></i></a>
-    <a href="#"><i class="fa fa-vcard-o"></i></a>
-    <a href="#" id="eventsButton"><i class="fa fa-table"></i></a>
+    <router-link to="/"><i class="fa fa-vcard-o"></i></router-link>
+    <router-link to="Calendar" id="eventsButton"><i class="fa fa-table"></i></router-link>
   </header>
     <!-- This data will persist EVERYWHERE on your SPA -->
 
@@ -19,6 +19,10 @@ export default {
 
 <style>
 @import '../node_modules/bootstrap/dist/css/bootstrap.css';
+
+* {
+  font-family: 'Cabin', sans-serif;
+}
 
 .main-nav {
   position: fixed;
