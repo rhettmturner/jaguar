@@ -1,20 +1,25 @@
 <template>
     <div class="swipe">
-      <div class="container">
-        <a href="#"><img src="http://via.placeholder.com/350x400" class="roundedBorders"></a>
-        <div class="row roundedBorders" id="eventInformation">
+      <router-link to="Description">
+        <div class="container">
 
-          <div id="eventNameAndLocation" class="col-xs-9">
-            <h3>Event Name</h3>
-            <h4>Event Location</h4>
+
+            <a href="#"><img src="http://via.placeholder.com/350x400" class="roundedBorders"></a>
+            <div class="row roundedBorders" id="eventInformation">
+
+              <div id="eventNameAndLocation" class="col-xs-9">
+                <h3 id="title">Event Name</h3>
+                <h4 id="location">Event Location</h4>
+              </div>
+
+              <div id="eventDateAndPrice" class="col-xs-3">
+                <h3 id="date">Date</h3>
+                <h4 id="price">$$$</h4>
+              </div>
+
+            </div>
           </div>
-
-          <div id="eventDateAndPrice" class="col-xs-3">
-            <h3>Date</h3>
-            <h4>$$$</h4>
-          </div>
-
-        </div>
+        </router-link>
 
       <div id="buttons">
         <button class="btn btns btnNo">&#10006;</button>
