@@ -13,6 +13,12 @@
 -->
 
 <script>
+import { EventBus } from './event-bus'
+
+EventBus.$on('event', localEvents => {
+  console.log("Within Description: " + localEvents.description)
+})
+
 export default {
   name: 'description',
   data () {

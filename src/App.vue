@@ -5,8 +5,6 @@
     <router-link to="/"><i class="fa fa-vcard-o"></i></router-link>
     <router-link to="Calendar" id="eventsButton"><i class="fa fa-table"></i></router-link>
   </header>
-    <!-- This data will persist EVERYWHERE on your SPA -->
-
     <router-view></router-view>
   </div>
 </template>

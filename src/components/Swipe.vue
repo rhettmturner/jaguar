@@ -1,42 +1,36 @@
 <template>
-  <div class="swipe">
+  <div v-if="localEvents[counter]" class="swipe">
     <router-link to="Description">
-      <div class="container">
-
-      <!--
-        Need to find a way to pull url from localEvents object & 
-          need to find a way to pull image from localEvents object
-        Also need to adjust styling now that data is present
-      -->
-      <a href="/"><img src="http://via.placeholder.com/350x400" class="roundedBorders"></a>
-      <div class="row roundedBorders" id="eventInformation">
-        <div id="eventNameAndLocation" class="col-xs-9">
-          <h3>{{ localEvents[counter].title }}</h3>
-          <h4>{{ localEvents[counter].genre }}</h4>
-        </div>
-
-        <div id="eventDateAndPrice" class="col-xs-3">
-          <h3>{{ localEvents[counter].date }}}</h3>
-          <h4>{{ localEvents[counter].priceRange }}</h4>
-        </div>
-
+      <div  @click="passLocalEvents(localEvents[counter])" class="container">
+        <a href="/Description"><img :src="displayEventImage(localEvents[counter])" class="roundedBorders"></a>
+        <div class="row roundedBorders" id="eventInformation">
+          <div id="eventNameAndLocation" class="col-xs-9">
+            <h3>{{ localEvents[counter].title }}</h3>
+            <h4>{{ localEvents[counter].genre }}</h4>
           </div>
+
+          <div id="eventDateAndPrice" class="col-xs-3">
+            <h3>{{ localEvents[counter].date }}}</h3>
+            <h4>{{ localEvents[counter].priceRange }}</h4>
+          </div>
+
+            </div>
         </div>
       </router-link>
-
     <div id="buttons">
       <!--
         On click, we can push to a likedEvents array which we export
           from here and import into the calendar file?
       -->
-      <button class="btn btns btnNo" v-on:click="counter += 1">&#10006;</button>
-      <button class="btn btns btnYes" v-on:click="counter += 1">&#10003;</button>
+      <button class="btn btns btnNo" @click="counter += 1">&#10006;</button>
+      <button class="btn btns btnYes" @click="navigateToURL(localEvents[counter])">&#10003;</button>
     </div>  
   </div>
 </template>
 
 <script>
 import axios from 'axios';
+import { EventBus } from './event-bus'
 
 function eventObj(title, genre, date, time, priceRanges, description, eventLink, images)  {
     this.title = title;
@@ -73,6 +67,17 @@ export default {
         localEvents.push(new eventObj(o.name, o.classifications[0].genre.name, o.dates.start.localDate, o.dates.start.localTime, priceRange, '', o.url, image))
       })
     })
+  },
+  methods: {
+    navigateToURL: function (localEvents) {
+      return window.location.href = localEvents.eventLink;
+    },
+    displayEventImage: function (localEvents) {
+      return localEvents.image;
+    },
+    passLocalEvents: function(localEvents) {
+      EventBus.$emit('event', localEvents);
+    }
   }
 }
 </script>
