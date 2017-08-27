@@ -29,13 +29,17 @@
 
 <script>
 import axios from 'axios';
-function eventObj( title,location, date, description, category, genre)  {
+function eventObj(title, location, date, priceRanges, description, eventLink, images)  {
     this.title = title;
     this.location = location;
     this.date = date;
+    console.log("Blah: " + priceRanges.max)
+    this.priceRange = (priceRanges) ? priceRanges.max : '';
+    //    this.priceRange = (priceRanges) ? priceRanges.min + ' - ' + priceRanges.max : '';
     this.description = description;
-    this.category = category;
-    this.genre = genre;
+    this.eventLink = eventLink;
+    this.image = (images) ? images[0].url : '';
+    console.log("Blah blah: " + images[0].url)
 }
 
 var token = "BE4MSLBLQD6THH4B74W5";
@@ -54,13 +58,24 @@ export default {
   }),
 
   created() {
-    axios.get('https://www.eventbriteapi.com/v3/events/search/?token=' + token + '&location.latitude=' + latitude + '&location.longitude=' + longitude + '&location.within=' + within)
+    axios.get('https://app.ticketmaster.com/discovery/v2/events.json?dmaId=232&apikey=c1DrkQUS5VFM6ZdKD4tbZxFPLtoK9dGC')
     .then(response => {
-      this.events = response.data.events
-      console.log(response.data.events);
-      
-      this.events.forEach( function(o){ localEvents.push(new eventObj(o.name.text)) })
-      console.log(localEvents)
+      this.events = response.data._embedded.events
+      console.log(response.data._embedded.events);
+      this.events.forEach(function (o) {
+        var priceRange = 'Nothing';
+        if (o.priceRanges !== undefined && o.priceRanges.length > 0) {
+          priceRange = o.priceRanges[0];
+        }
+        var image = '#';
+        if (o.images.length > 0) {
+          image = o.images;
+        }
+        localEvents.push(new eventObj(o.name, '', o.dates.start.localDate, priceRange, '', o.url, image))
+        //        localEvents.push(new eventObj(o.name, '', o.dates.start.localDate, o.priceRanges.min, o.priceRanges.max, '', o.url, o.images[0]))
+
+      })
+      console.log(localEvents[0])
       return localEvents
     })
   }
