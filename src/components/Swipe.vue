@@ -5,17 +5,15 @@
         <div class="row roundedBorders" id="eventInformation">
 
           <div id="eventNameAndLocation" class="col-xs-9">
-            <h3>Event Name</h3>
-            <h4>Event Location</h4>
+            <h3>{{ localEvents[counter].title }}</h3>
+            <h4>{{ localEvents[counter].genre }}</h4>
           </div>
 
           <div id="eventDateAndPrice" class="col-xs-3">
-            <h3>Date</h3>
-            <h4>$$$</h4>
+            <h3>{{ localEvents[counter].date }}}</h3>
+            <h4>{{ localEvents[counter].priceRange }}</h4>
           </div>
         </div>
-        <p>{{ localEvents }}</p>
-
       <div id="buttons">
         <button class="btn btns btnNo" v-on:click="counter += 1">&#10006;</button>
         <button class="btn btns btnYes" v-on:click="counter += 1">&#10003;</button>
@@ -29,23 +27,15 @@
 
 <script>
 import axios from 'axios';
-function eventObj(title, location, date, priceRanges, description, eventLink, images)  {
+function eventObj(title, genre, date, time, priceRanges, description, eventLink, images)  {
     this.title = title;
-    this.location = location;
-    this.date = date;
-    console.log("Blah: " + priceRanges.max)
-    this.priceRange = (priceRanges) ? priceRanges.max : '';
-    //    this.priceRange = (priceRanges) ? priceRanges.min + ' - ' + priceRanges.max : '';
+    this.genre = genre;
+    this.date = date + " " + time.slice(0, 5);
+    this.priceRange = (priceRanges) ? '$' + priceRanges.min + ' - $' + priceRanges.max : '';
     this.description = description;
     this.eventLink = eventLink;
     this.image = (images) ? images[0].url : '';
-    console.log("Blah blah: " + images[0].url)
 }
-
-var token = "BE4MSLBLQD6THH4B74W5";
-var latitude = '33.543682';
-var longitude = '-86.779633';
-var within = '20mi';
 var counter = 0;
 var localEvents = [];
 
@@ -63,19 +53,14 @@ export default {
       this.events = response.data._embedded.events
       console.log(response.data._embedded.events);
       this.events.forEach(function (o) {
-        var priceRange = 'Nothing';
-        if (o.priceRanges !== undefined && o.priceRanges.length > 0) {
-          priceRange = o.priceRanges[0];
+        if (o.priceRanges != undefined && o.priceRanges.length > 0) {
+          var priceRange = o.priceRanges[0];
         }
-        var image = '#';
         if (o.images.length > 0) {
-          image = o.images;
+          var image = o.images;
         }
-        localEvents.push(new eventObj(o.name, '', o.dates.start.localDate, priceRange, '', o.url, image))
-        //        localEvents.push(new eventObj(o.name, '', o.dates.start.localDate, o.priceRanges.min, o.priceRanges.max, '', o.url, o.images[0]))
-
+        localEvents.push(new eventObj(o.name, o.classifications[0].genre.name, o.dates.start.localDate, o.dates.start.localTime, priceRange, '', o.url, image))
       })
-      console.log(localEvents[0])
       return localEvents
     })
   }
